@@ -57,6 +57,36 @@ var systems = {
         },
         len: 1800,
         angle: 2 * Math.PI / 3
+    },
+    dragon_curve: {
+        axiom: 'FX',
+        rules: [{
+                a: 'X',
+                b: 'X+YF+'
+            },
+            {
+                a: 'Y',
+                b: '-FX-Y'
+            }
+        ],
+        turtle: function() {
+            background(51);
+            translate(300, 300);
+            stroke(150, 200, 255);
+
+            for (var i = 0; i < string.length; i++) {
+                if (string[i] == 'F') {
+                    line(0, 0, 0, -len);
+                    translate(0, -len);
+                } else if (string[i] == '+') {
+                    rotate(-angle);
+                } else if (string[i] == '-') {
+                    rotate(angle);
+                }
+            }
+        },
+        len: 5,
+        angle: Math.PI / 2
     }
 
 };
@@ -83,7 +113,7 @@ function setSystem() {
     angle = systems[currentSystem].angle;
 
     background(51);
-    createP(axiom);
+    $('.string').text(axiom);
     turtle(axiom);
 }
 
@@ -106,7 +136,7 @@ function generate() {
     }
 
     string = newString;
-    createP(string);
+    $('.string').text(string);
     turtle(string);
 }
 
@@ -119,6 +149,6 @@ function setup() {
     button.mousePressed(generate);
     document.querySelector('.system').addEventListener('change', setSystem);
 
-    createP(axiom);
+    createP(axiom).addClass('string');
     turtle(axiom);
 }
