@@ -71,7 +71,7 @@ var systems = {
         ],
         turtle: function() {
             background(51);
-            translate(300, 300);
+            translate(240, 500);
             stroke(150, 200, 255);
 
             for (var i = 0; i < string.length; i++) {
@@ -87,6 +87,44 @@ var systems = {
         },
         len: 5,
         angle: Math.PI / 2
+    },
+    fractal_plant: {
+        axiom: 'X',
+        rules: [{
+                a: 'X',
+                b: 'F-[[X]+X]+F[+FX]-X'
+            },
+            {
+                a: 'F',
+                b: 'FF'
+            }
+        ],
+        len: 200,
+        angle: 0.436332313,
+        turtle: function() {
+            background(51);
+            translate(100, height - 30);
+            stroke(100, 255, 110);
+
+            len *= 0.6;
+
+            for (var i = 0; i < string.length; i++) {
+                if (string[i] == 'F') {
+                    // line(0, 0, 0, -len);
+                    // translate(0, -len);
+                    line(0, 0, len * Math.sin(angle), -len * Math.cos(angle));
+                    translate(len * Math.sin(angle), -len * Math.cos(angle));
+                } else if (string[i] == '+') {
+                    rotate(angle);
+                } else if (string[i] == '-') {
+                    rotate(-angle);
+                } else if (string[i] == '[') {
+                    push();
+                } else if (string[i] == ']') {
+                    pop();
+                }
+            }
+        }
     }
 
 };
